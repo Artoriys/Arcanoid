@@ -13,12 +13,27 @@ import javafx.util.Duration;
 
 
 public class GameField extends Application {
-    Pane canvas = new Pane();
-   public Ball ball = new Ball(275, 490, 5, Color.WHITE);
+
+    public static GameField me;
+    public GameField()
+    {
+        me=this;
+    }
+
+    static Pane canvas = new Pane();
+    static Ball ball = new Ball(5, Color.WHITE);
+    static Platform platform = new Platform(80,5, Color.WHITE);
     Scene scene = new Scene(canvas,550,500, Color.BLACK);
+
+
+
+
     @Override
     public void start(Stage stage) {
         canvas.getChildren().add(ball);
+        canvas.getChildren().add(platform);
+        ball.relocate(50, 50);
+        platform.relocate(235,495);
 
         stage.setScene(scene);
         stage.setTitle("Cat Arcanoid");
@@ -27,8 +42,8 @@ public class GameField extends Application {
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20),
                 new EventHandler<ActionEvent>() {
-            double dx = 1;
-            double dy = 1;
+            double dx = 10;
+            double dy = 10;
 
                     @Override
                     public void handle(ActionEvent t) {
@@ -36,6 +51,8 @@ public class GameField extends Application {
                         ball.setLayoutY(ball.getLayoutY() + dy);
 
                         dx = ball.XCollision(dx);
+                        dy = ball.YCollision(dy);
+                        dy = platform.PlatformCollision(dy);
                     }
 
 
