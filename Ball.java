@@ -46,18 +46,21 @@ public class Ball extends Circle {
         Bounds bounds = GameField.canvas.getBoundsInLocal();
 
 
-        if(GameField.ball.getLayoutY() <= (bounds.getMinY() + GameField.ball.getRadius()) ||
-                GameField.ball.getLayoutY() >= (bounds.getMaxY() - GameField.ball.getRadius()) ){
+        if (GameField.ball.getLayoutY() <= (bounds.getMinY() + GameField.ball.getRadius()) ||
+                GameField.ball.getLayoutY() >= (bounds.getMaxY() - GameField.ball.getRadius())) {
 
             dy = -dy;
 
         }
-        if (GameField.ball.getLayoutY() == bounds.getMaxY()- GameField.ball.getRadius())  {
-            System.out.println("Game Over!!");
-            System.exit(1);
-        }
-
         return dy;
     }
+    public void GameOver() {
+        Bounds bounds = GameField.canvas.getBoundsInLocal();
+        if (GameField.ball.getLayoutY() == (bounds.getMaxY() - GameField.ball.getRadius())) {
+            System.out.println("Game Over!!");
+            GameField.timeline.stop();
+        }
+    }
 
-}
+    }
+
